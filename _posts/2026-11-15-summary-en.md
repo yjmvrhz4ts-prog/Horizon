@@ -5,176 +5,143 @@ date: 2026-11-15
 lang: en
 ---
 
-> From 33 items, 7 important content pieces were selected
+> From 33 items, 6 important content pieces were selected
 
 ---
 
 **Technology News**
-1. [Lovable apps exposed passport details and 200K messages via RLS gaps](#item-tech-news-1) ⭐️ 8.0/10
-2. [BiRefNet-lite rewritten for phone NPUs: 23.7 ms 1024px masks, int8, open weights](#item-tech-news-2) ⭐️ 8.0/10
-3. [SpaceX reports first Starship tower catch after orbital return](#item-tech-news-3) ⭐️ 8.0/10
-4. [Meituan releases LongCat-2.5 weights, claims all-Huawei Ascend training](#item-tech-news-4) ⭐️ 8.0/10
-5. [PyPI project pages now show provenance and security signals](#item-tech-news-5) ⭐️ 7.0/10
-6. [Tesla Cybercab terms require $299 monthly autonomy subscription](#item-tech-news-6) ⭐️ 7.0/10
-7. [FAA says nationwide ground stop linked to router in copper-to-fiber upgrade](#item-tech-news-7) ⭐️ 7.0/10
+1. [SpaceX catches Starship after Flight 15; booster splashes down](#item-tech-news-1) ⭐️ 8.0/10
+2. [Investigation finds Lovable-built apps exposed passport data, 200K messages](#item-tech-news-2) ⭐️ 8.0/10
+3. [BiRefNet-lite rewritten for phone NPUs: 23.7 ms at 1024px, int8](#item-tech-news-3) ⭐️ 8.0/10
+4. [Meituan open-sources LongCat-2.5, claims Huawei-only training](#item-tech-news-4) ⭐️ 8.0/10
+5. [Papr reports 96.0% on LongMemEval-S, with tuned-retrieval caveat](#item-tech-news-5) ⭐️ 7.0/10
+6. [FAA ground stop tied to router fault after copper-to-fiber upgrade](#item-tech-news-6) ⭐️ 7.0/10
 
 ---
 
 ## Technology News
 
 <a id="item-tech-news-1"></a>
-### [Lovable apps exposed passport details and 200K messages via RLS gaps](https://www.crissyfield.de/research/lovable-en/) ⭐️ 8.0/10
+### [SpaceX catches Starship after Flight 15; booster splashes down](https://www.spacex.com/launches/starship-flight-15) ⭐️ 8.0/10
 
-Security researchers reported that apps built with Lovable exposed passport details and more than 200,000 private messages because of insufficient Row-Level Security. Lovable&\#x27;s head of security, commenting as igorandri, said the root cause was insufficient RLS and that Lovable scans every app before publishing, offers a deeper SAST scan, and provides fix, auto-fix, and publishing-block options; those are vendor claims not independently verified in the supplied material.
+SpaceX says Starship Flight 15 ended with the vehicle caught by the launch tower&\#x27;s mechanical arms after returning from orbit, a first for the program. The flight lasted about 22.5 hours and roughly 14 orbits, and it deployed 26 next-generation Starlink V3 satellites. The Super Heavy booster did not return to the tower as planned and splashed down in the Gulf of Mexico, so SpaceX did not achieve a two-stage catch on this attempt.
 
-hackernews · armcat · Nov 14, 17:43 · [Discussion](https://news.ycombinator.com/item?id=50499017)
+hackernews · ls612 · Nov 14, 21:22 · [Discussion](https://news.ycombinator.com/item?id=50500963)
 
-**「Why RLS matters for Lovable apps」** Supabase, the backend Lovable commonly generates against, relies on Postgres Row-Level Security policies to decide which rows each user may read or write; tables shipped without RLS enabled, or with permissive policies, are readable by anyone holding the public API key. This failure mode was already tracked as CVE-2025-48757 \(CVSS 9.3\), which covered Lovable-generated Supabase applications leaking data through missing or broken RLS. Subsequent write-ups noted that Lovable&\#x27;s built-in scan checked whether policies existed rather than whether they actually restricted access, leaving per-table audits and auth.uid\(\) checks as the practical verification step.
+**「Background」** Starship is SpaceX’s two-stage reusable launch system, consisting of the Super Heavy booster and the Starship upper stage. SpaceX’s recovery concept uses the launch tower’s mechanical arms to catch a returning vehicle instead of landing it on legs. Flight 15 applied that tower-catch approach to the ship after its orbital mission.
 
-**「Impact」** For developers using Lovable, the immediate task is to verify that Row-Level Security is enabled and tested on every client-reachable table; one commenter noted that the reported exposures could be found by inspecting browser network calls rather than through sophisticated exploitation.
+**「Impact」** SpaceX&\#x27;s Starlink and commercial launch customers still lack a demonstrated two-stage recovery on a single Starship mission: Flight 15 recovered the ship, but the Super Heavy booster splashed down in the Gulf of Mexico. Until SpaceX catches and reflies both stages, the cost-per-payload gains cited for full reusability remain unproven in operation, even though the mission deployed 26 Starlink V3 satellites.
 
-**「Community discussion」** Commenters split over responsibility: one argued that Supabase&\#x27;s long-standing permissive defaults are the deeper issue and said a supposed October 30 fix may not apply to existing projects, while Lovable&\#x27;s security lead said insufficient RLS is exactly what its pre-publish and SAST scans are designed to catch. Another commenter described these AI-generated apps as easy, numerous targets whose users often cannot judge the risk.
+**「Community discussion」** Commenters treated heat-shield durability as the decisive question and outlined the next test: catching both stages, then re-flying and recatching the same ships to lower payload costs. Others questioned the eventual mass fraction to orbit and argued that a fully reusable vehicle would beat Falcon 9&\#x27;s partially reusable design, while one commenter suggested extra booster propellant might have made a booster catch possible.
 
-<details><summary>References</summary>
-<ul>
-<li><a href="https://elysiancrest.com/insights/custom-software/cve-2025-48757-lovable-rls-audit">CVE-2025-48757 &amp; Lovable RLS: What to Verify Before Launch</a></li>
-<li><a href="https://www.brinztech.com/breach-alerts/brinztech-alert-critical-row-level-security-rls-vulnerability-cve-2025-48757-exposed-lovable-supabase-applications/">Critical Row Level Security (RLS) Vulnerability (CVE-2025 ...</a></li>
-<li><a href="https://ptkd.com/journal/lovable-dev-supabase-rls-bypass-vulnerability">Lovable.dev Supabase RLS bypass: how it happens, how to fix it</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#security`, `#AI-generated-code`, `#Supabase`, `#row-level-security`, `#app-builder`
+**Tags**: `#SpaceX Starship`, `#reusable rockets`, `#spaceflight`, `#hardware engineering`, `#Hacker News`
 
 ---
 
 <a id="item-tech-news-2"></a>
-### [BiRefNet-lite rewritten for phone NPUs: 23.7 ms 1024px masks, int8, open weights](https://www.reddit.com/r/MachineLearning/comments/1xwuvaz/birefnetlite_at_1024px_fully_on_a_phone_npu_237/) ⭐️ 8.0/10
+### [Investigation finds Lovable-built apps exposed passport data, 200K messages](https://www.crissyfield.de/research/lovable-en/) ⭐️ 8.0/10
 
-An independent researcher released an int8 rewrite of BiRefNet-lite that keeps all 2,060 layers on a phone NPU and returns a 1024×1024 matte in 23.7 ms on a Galaxy S26 \(Snapdragon 8 Elite Gen 5\), 31.1 ms on an S25, and 182 ms on a mid-range Snapdragon 7 Gen 1. The original model does not compile to phone NPUs, so the rewrite swaps 20 deformable convolutions for plain convs, removes 5D/6D tensors and cyclic window rolls through exact graph rewrites, pairs a 640px backbone with a slim full-resolution tail, and distils through the exported NPU graph with all 8-bit weights. Weights plus AOT-compiled binaries for 42 Snapdragon chips are on Hugging Face with MIT-licensed code and a Zenodo paper, but the latency and accuracy figures are self-reported on Reddit and not independently validated. On held-out ECSSD and DUT-OMRON the int8 model tracks its fp32 teacher in S-measure \(0.939 vs 0.938 and 0.830 vs 0.826\), while losing 0.017 S-measure on DIS-VD fine structures such as wires and fences, and six public models beat it on DUT-OMRON.
+A security investigation reported that apps built with Lovable exposed sensitive user data, including passport details and more than 200,000 private messages, because of insufficient Row-Level Security and insecure defaults. Lovable&\#x27;s head of security said insufficient Row-Level Security was the root cause and that the company automatically scans every app before publish, offers a free deeper SAST scan, and provides manual or automatic fixes.
 
-reddit · r/MachineLearning · /u/subhashg547 · Nov 15, 12:58
+hackernews · armcat · Nov 14, 17:43 · [Discussion](https://news.ycombinator.com/item?id=50499017)
 
-**「Background」** BiRefNet is an open-source bilateral-reference model for dichotomous image segmentation, and its lite variant has 44.4M parameters, according to its Hugging Face model card. The project had already released a BiRefNet-lite-2K version for 2560×1440 inputs in September 2024, so the starting point for this phone-NPU port was an existing high-resolution segmentation model rather than a purpose-built mobile network.
+**「Why Row-Level Security matters here」** Lovable is an AI app builder whose generated apps can use Supabase, a hosted Postgres development platform. In that architecture, Postgres Row-Level Security is the database-side rule set that determines which rows a logged-in user can read or modify; if it is missing or misconfigured, the client can query more data than intended. In the HN thread, one commenter argued Supabase shares responsibility, saying a years-old onboarding tradeoff produced weak defaults and that a reported October 30 fix may not cover existing projects—a community claim, not independently verified here.
 
-**「Impact」** Android developers can test the precompiled Qualcomm binaries directly, but the release covers Snapdragon only — there is no MediaTek or Tensor support — and power draw is unmeasured, so the battery cost of a per-tap cutout remains unknown. The author also flags a distillation failure that his loss curve hid: a sigmoid gate on the deepest decoder branch saturated to about 1e-11 and went dead while the rest of the decoder compensated, and he restored it from the teacher with a feature loss rather than retraining from scratch.
+**「Impact」** The reported exposure means users of these Lovable-built apps could have passport and message data reachable through browser-visible requests, and builders need to verify Row-Level Security policies instead of relying on defaults.
+
+**「Community Discussion」** Commenters disagreed over where responsibility lies: one argued that Supabase&\#x27;s long-standing permissive defaults are a major cause and that reports suggest existing projects may still use the old defaults, while another said data breaches predate AI but these apps are easier to probe and far more numerous. Lovable&\#x27;s security lead responded that pre-publish scanning and optional fixes are designed to catch the reported Row-Level Security failures.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://huggingface.co/ZhengPeng7/BiRefNet_lite">ZhengPeng7/ BiRefNet _ lite · Hugging Face</a></li>
-<li><a href="https://github.com/ZhengPeng7/BiRefNet">GitHub - ZhengPeng7/ BiRefNet : [CAAI AIR&#x27;24] Bilateral Reference for...</a></li>
+<li><a href="https://github.com/supabase/supabase">GitHub - supabase / supabase : The Postgres development platform. ...</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#on-device AI`, `#mobile NPU`, `#model quantization`, `#image segmentation`, `#model optimization`
+**Tags**: `#application security`, `#AI coding tools`, `#data exposure`, `#Supabase`, `#Row-Level Security`
 
 ---
 
 <a id="item-tech-news-3"></a>
-### [SpaceX reports first Starship tower catch after orbital return](https://www.spacex.com/launches/starship-flight-15) ⭐️ 8.0/10
+### [BiRefNet-lite rewritten for phone NPUs: 23.7 ms at 1024px, int8](https://www.reddit.com/r/MachineLearning/comments/1xwuvaz/birefnetlite_at_1024px_fully_on_a_phone_npu_237/) ⭐️ 8.0/10
 
-SpaceX announced that Starship completed its 15th test flight and, after about 22.5 hours in space and roughly 14 orbits, returned to its Texas launch site and was caught directly by the launch tower&\#x27;s mechanical arms for the first time. The mission also deployed 26 next-generation Starlink V3 satellites. However, the Super Heavy booster did not return to the tower as planned and splashed down in the Gulf of Mexico, so SpaceX has not yet recovered both stages at the launch site on the same flight.
+An independent researcher rewrote and int8-quantized BiRefNet-lite so that all 2,060 layers run as a single NPU partition, reporting 23.7 ms per 1024×1024 mask on a Galaxy S26 \(Snapdragon 8 Elite Gen 5\), 31.1 ms on an S25, and 182 ms on a mid-range Snapdragon 7 Gen 1. Stock BiRefNet-lite runs out of memory at 1024px on the same phones and falls back to CPU at 512px, taking 677 ms with a 2.1 GB peak. The rewrite replaces 20 deformable convolutions with plain convolutions, feeds a 1024px mask from a 640px backbone, and swaps the 5D/6D Swin tensors and cyclic-roll shifted windows for 4D window partitioning and roll-free masked shifting, with quantization-aware distillation performed through the exported NPU graph. The author reports the int8 student matching its fp32 teacher in S-measure on held-out ECSSD and DUT-OMRON \(0.939 vs 0.938 and 0.830 vs 0.826\) but losing 0.017 S-measure on fine structures in DIS-VD; weights, 42 AOT-compiled Snapdragon chip files, and MIT-licensed code are released, with no MediaTek or Tensor support and no power measurements yet. All latency and accuracy figures are author-reported in the linked writeup and paper.
 
-telegram · zaihuapd · Nov 14, 23:49
+reddit · r/MachineLearning · /u/subhashg547 · Nov 15, 12:58
 
-**「Background」** Starship is a two-stage launch vehicle consisting of the Super Heavy booster and the Starship upper stage; recovering both is central to SpaceX&\#x27;s reusable heavy-lift design. The reported mission was the program&\#x27;s 15th test flight, so it followed an extended flight-test campaign rather than being an initial demonstration. The upper stage&\#x27;s return from orbital velocity is a distinct recovery problem from the booster&\#x27;s return to the launch site.
+**「Background」** BiRefNet-lite is an open-weight image segmentation model whose decoder uses deformable convolutions and whose Swin transformer stages rely on 5D/6D tensors and cyclic window rolls. Those operations, together with 1024px activations, are poorly matched to phone NPUs, which need compiler-friendly graphs and fit within limited on-chip memory; unsupported pieces force CPU fallback or out-of-memory failures.
 
-**「Starlink capacity gain scales with payload load」** For Starlink users and partners, the practical payoff depends on how fully each Starship is loaded: SpaceX has said a Starship launch can deploy roughly 20× the capacity of a Falcon 9 launch carrying V2 satellites, but this flight deployed 26 V3 satellites, while SpaceX&\#x27;s own materials project up to about 60 V3 satellites per Starship flight. The roughly 20× capacity figure should therefore be read as a vendor projection contingent on near-full payloads and sustained cadence, not something demonstrated on this mission.
+**「Deployment trade-off」** Developers targeting Snapdragon phones get a fully on-NPU 1024px matting model, compiled AOT for 42 chips, but the same app cannot use it on MediaTek or Tensor devices, which the author lists as unsupported. The 23.7 ms figure is tied to the Snapdragon 8 Elite Gen 5 version of the Galaxy S26; regional S26 units shipping Exynos silicon fall outside both the benchmark and the precompiled binaries. Applications that depend on thin structures such as wires and fences should also account for the reported 0.017 S-measure drop versus the fp32 teacher on DIS-VD.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://cheatsheets.davidveksler.com/starlink-satellite-anatomy.html">Starlink V3 Satellite Specs: Size, Mass &amp; V1-V3 Anatomy</a></li>
-<li><a href="https://starlink.com/updates/starlink-version-3-satellites">Starlink Version 3 Satellites</a></li>
+<li><a href="https://www.promptquorum.com/fr/local-llms/galaxy-s26-local-ai-on-device-2026">Galaxy S 26 IA Locale: Galaxy AI et NPU Fonctionnement</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#SpaceX`, `#Starship`, `#spaceflight`, `#reusable spacecraft`, `#Starlink`
+**Tags**: `#on-device ML`, `#int8 quantization`, `#NPU deployment`, `#image segmentation`, `#model optimization`
 
 ---
 
 <a id="item-tech-news-4"></a>
-### [Meituan releases LongCat-2.5 weights, claims all-Huawei Ascend training](https://the-decoder.com/meituan-releases-a-1-6-trillion-parameter-agent-model-that-never-touched-an-nvidia-gpu/) ⭐️ 8.0/10
+### [Meituan open-sources LongCat-2.5, claims Huawei-only training](https://the-decoder.com/meituan-releases-a-1-6-trillion-parameter-agent-model-that-never-touched-an-nvidia-gpu/) ⭐️ 8.0/10
 
-Meituan&\#x27;s LongCat team released open weights for LongCat-2.5 a week after the model&\#x27;s launch, a 1.6-trillion-parameter agent model aimed at long, multi-step tasks such as coding; the weights use the MIT license and permit commercial use. The company claims the model was trained entirely on Huawei Ascend accelerators without Nvidia GPUs, activates about 48 billion parameters per token, and accepts text, image, and video inputs. Meituan reports 88.4 on Terminal Bench v2.1 versus 89.1 for Claude Opus 5, but the benchmark and all-Huawei training claims have not been independently verified in the supplied material.
+Meituan&\#x27;s LongCat team released weights for LongCat-2.5, a 1.6-trillion-parameter agent model, one week after launch under an MIT license that allows commercial use. The model accepts text, image, and video input, activates about 48 billion parameters per token, and is aimed at long, multi-step tasks such as coding. Meituan reports an 88.4 score on Terminal Bench v2.1, just below Claude Opus 5&\#x27;s 89.1, and says the model was trained entirely on Huawei Ascend chips without Nvidia GPUs; both are vendor claims not independently verified in the supplied material.
 
 telegram · zaihuapd · Nov 15, 11:08
 
-**「Background」** LongCat-2.5 is a mixture-of-experts model: it has 1.6 trillion total parameters, but only about 48 billion are activated per token, so each token uses a fraction of the full network. Meituan&\#x27;s LongCat team published the weights roughly a week after the model&\#x27;s formal launch, moving LongCat-2.5 from an announced model to downloadable open weights.
+**「Background」** LongCat-2.5 is a sparse-activation model: about 48 billion of its parameters are active per token, so that figure describes the compute path used for each token rather than the model&\#x27;s full size. Meituan&\#x27;s LongCat team announced the model first and published the downloadable weights about a week later under an MIT license, which permits commercial use.
 
-**「Hardware independence with caveats」** Organizations weighing Huawei Ascend as an Nvidia alternative have another option: an MIT-licensed 1.6T-parameter model claimed to be trained entirely on Ascend, following Zhipu&\#x27;s GLM-5. Because the Ascend-only training claim and the 88.4 Terminal Bench v2.1 score are vendor-reported, teams should reproduce both on their own workloads before basing procurement or deployment decisions on them.
+**「Developer impact」** Because the weights are MIT-licensed for commercial use, developers can self-host, fine-tune, and ship LongCat-2.5 in products without a Meituan commercial agreement; however, its headline 88.4 Terminal Bench v2.1 score is vendor-reported and unverified by third parties, so teams should test it on their own coding-agent tasks before adoption.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://huggingface.co/meituan-longcat/LongCat-2.5">meituan - longcat / LongCat - 2 . 5 · Hugging Face</a></li>
-<li><a href="https://readalchemist.com/articles/glm-5-breaks-the-nvidia-monopoly-on-frontier-training">GLM-5 Breaks the NVIDIA Monopoly on Frontier Training</a></li>
+<li><a href="https://tpsreport.news/models/longcat-2-5">LongCat - 2 . 5 specs, benchmarks and changelog | TPS</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#open-weight models`, `#AI agents`, `#Huawei Ascend`, `#LLM training`, `#benchmarks`
+**Tags**: `#open-source LLMs`, `#agentic coding`, `#Huawei Ascend`, `#model training`, `#benchmarks`
 
 ---
 
 <a id="item-tech-news-5"></a>
-### [PyPI project pages now show provenance and security signals](https://blog.pypi.org/posts/2026-11-06-ui-updates-complete/) ⭐️ 7.0/10
+### [Papr reports 96.0% on LongMemEval-S, with tuned-retrieval caveat](https://www.reddit.com/r/MachineLearning/comments/1xwnloh/longmemevals_960_with_the_official_judge_and_what/) ⭐️ 7.0/10
 
-PyPI’s redesigned project pages are now live, adding provenance and security signals to the pages Python developers use to inspect packages. The Files tab shows whether a project has provenance—datasette is shown with it, while dlt is shown without—making release-integrity information visible on PyPI itself. Coverage varies by project rather than applying uniformly across the registry.
+Papr reports 96.0% on all 500 LongMemEval-S questions using a Papr-Embed 0.6B retriever, a Gemini Flash 2.5 reranker, and a single-turn answer model under the official answer prompt and the unmodified gpt-4o-2024-08-06 judge; per-question answers and judge labels are public, so the official metrics script reproduces the score. Its ablations put evidence-session recall at 97.9% \(all evidence sessions in the top 5 for 460 of 470 answerable questions\) and show top-20 retrieval over top-5 is a trade: 11 questions gained, 8 lost, net +3, with temporal reasoning rising from 123 to 130 of 133 and abstention flat at 27/30. Papr cautions that the run is self-reported, run-to-run variance is about ±3 questions—making 96.0% versus Chronos&\#x27;s 95.6% a tie—and top-20 was chosen after reviewing top-5 misses, so the 96.0% result is tuned on this set; gpt-5-mini reached 94.4% on the same retrieval.
 
-hackernews · rbanffy · Nov 14, 15:40 · [Discussion](https://news.ycombinator.com/item?id=50497892)
+reddit · r/MachineLearning · /u/remoteinspace · Nov 15, 05:40
 
-**「Background」** PyPI&\#x27;s Trusted Publishing lets a project trust a specific CI service configuration as an OIDC publisher, so releases can be uploaded without long-lived API tokens. PEP 740 attestations build on those OIDC workflows: the same publishing job can automatically obtain a Sigstore certificate that binds the upload to a machine identity such as a GitHub repository and workflow, creating verifiable provenance.
+**「Background」** LongMemEval-S is a 500-question benchmark for long-term memory in LLM assistants, scored with an official answer prompt and judge. Reported comparisons are not fully apples-to-apples: the post cites Chronos at 95.6%, Hindsight at 94.6% with a different judge and 43.6k tokens per question, and gbrain at 90.6%.
 
-**「Impact」** Python developers can now compare provenance status per project directly from the Files tab, as shown by datasette and dlt, making release verification a visible step on PyPI rather than an entirely external check.
+**「Impact」** For teams using LongMemEval-S as a procurement or regression benchmark, the practical takeaway is to rerun the public per-question artifacts with the official judge and fix retrieval depth before comparing systems; the reported ±3-question variance means small headline gaps are not decision-grade.
 
-**「Community discussion」** Commenters debated the trust model: time4tea argued that centering trust on “big cloud” providers promotes lock-in and is “a bit anti-pythonic,” while zoobab asked whether the security scanning itself is open source. samhclark said they want Sigstore-style keyless short-lived signatures to spread to more CI/CD providers, and mhils asked PyPI’s trusted publishing to support reusable workflows.
-
-<details><summary>References</summary>
-<ul>
-<li><a href="https://blog.trailofbits.com/2024/11/14/attestations-a-new-generation-of-signatures-on-pypi/">Attestations: A new generation of signatures on PyPI - The Trail of Bits...</a></li>
-<li><a href="https://docs.pypi.org/trusted-publishers/">Getting Started - PyPI User Documentation</a></li>
-<li><a href="https://yossarian.net/res/pub/soss-fusion-2024.pdf">[SOSS Fusion 2024] PEP 740 and PyPI : Bootstrapping Provenance ...</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#PyPI`, `#software supply chain security`, `#provenance`, `#open source`, `#package management`
+**Tags**: `#llm-memory`, `#retrieval-augmented-generation`, `#benchmarks`, `#evaluation`, `#long-context`
 
 ---
 
 <a id="item-tech-news-6"></a>
-### [Tesla Cybercab terms require $299 monthly autonomy subscription](https://www.tesla.com/configurator/api/v4/terms?category=autonomy_subs&amp;amp;locale=en_US&amp;amp;model=cc&amp;amp;saleType=Sale) ⭐️ 7.0/10
+### [FAA ground stop tied to router fault after copper-to-fiber upgrade](https://www.theverge.com/transportation/1033898/faa-ground-stop-sean-duffy-faa-copper-wire) ⭐️ 7.0/10
 
-Reports citing Tesla&\#x27;s Cybercab configurator terms say the vehicle costs $29,990 and requires a $299-per-month autonomous-driving subscription to operate. The terms state that Tesla can change the subscription price with one month&\#x27;s notice, and that nonpayment or violations can lead to suspension or cancellation; three accumulated warnings disable autonomous driving for one week. Cybercab operation is limited to designated areas, and unauthorized use on ride-hailing, delivery, or rental platforms is prohibited. Electrek notes that Cybercab and the Model Y used for Robotaxi share AI4 hardware and autonomous-driving software, while FSD for ordinary owners still requires human supervision.
+U.S. Transportation Secretary Sean Duffy said on Nov. 14 that the FAA&\#x27;s national ground stop was triggered by routine maintenance at a remote facility that replaced aging copper wiring with fiber; the newly installed router then malfunctioned, grounding thousands of flights. The router sent more than 1,000 connection requests every 4 to 5 seconds to other routers, disrupting radar signals and aircraft communications, according to Duffy. He said the root cause is not yet confirmed and could be a hardware failure, a configuration error, or a mistake by contractor L3Harris. Duffy also called on Congress to provide additional funding for air-traffic-control modernization.
 
-telegram · zaihuapd · Nov 15, 01:10
+telegram · zaihuapd · Nov 15, 02:10
 
-**「Background: from a $30,000 robotaxi promise to a personal-use purchase」** Tesla CEO Elon Musk unveiled the Cybercab in 2024 as a roughly $30,000 driverless Tesla, and The Verge reports Tesla has now begun inviting selected customers to buy one for personal use. Gizmodo notes the ownership terms confine operation to Tesla-enabled Robotaxi geofences, which so far exist only in Texas.
+**「Background」** The FAA issued a nationwide ground stop at 20:54 UTC on November 13, 2026, because of a communications outage. The maintenance work was part of an ongoing upgrade of an older L3Harris-managed communications system from copper wire to fiber-optic cable, which is the context for why a newly installed router&\#x27;s overload could affect air traffic communications.
 
-**「Impact」** For buyers, operation is conditional on an ongoing $299 monthly payment on top of the $29,990 purchase price, and nonpayment can lead to suspension or cancellation. The terms also bar unauthorized use on ride-hailing, delivery, or rental platforms, limiting owners&\#x27; ability to use the vehicle for commercial revenue.
+**「Impact」** The ground stop delayed or canceled more than 11,000 U.S. flights, and the air travel schedule was not expected to recover until Sunday. Because Transportation Secretary Sean Duffy said the cause could be hardware, configuration, or contractor L3Harris error, the FAA cannot yet rule out the same failure mode at other remote facilities undergoing similar copper-to-fiber upgrades.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://gizmodo.com/the-terms-of-cybercab-ownership-dont-add-up-musk-admits-2000840094">Musk Admits $ 299 Monthly Cybercab Fee Is Too High</a></li>
-<li><a href="https://www.theverge.com/transportation/1033844/tesla-personal-cybercab-orders-299-subscription-fine-print">Tesla is inviting some people to buy a Cybercab ‘for personal use ...</a></li>
+<li><a href="https://en.wikipedia.org/wiki/2026_FAA_nationwide_ground_stop">2026 FAA nationwide ground stop - Wikipedia</a></li>
+<li><a href="https://www.cnbc.com/2026/11/14/faa-ground-stop-flights-resume-delays.html">Ground stop followed contractor upgrade to L 3 Harris telecom system...</a></li>
+<li><a href="https://www.theguardian.com/world/2026/nov/13/faa-nationwide-ground-stop-flights">Flights slowly resume after US aviation agency lifts nationwide ...</a></li>
+<li><a href="https://weather.com/2026/11/13/travel/faa-nationwide-ground-stop-equipment-outage-flights">US air travel schedule should recover from ground stop by Sunday...</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#Tesla`, `#Cybercab`, `#autonomous driving`, `#subscription pricing`, `#robotaxi`
-
----
-
-<a id="item-tech-news-7"></a>
-### [FAA says nationwide ground stop linked to router in copper-to-fiber upgrade](https://www.theverge.com/transportation/1033898/faa-ground-stop-sean-duffy-faa-copper-wire) ⭐️ 7.0/10
-
-US Transportation Secretary Sean Duffy said on November 14 that Friday&\#x27;s FAA nationwide ground stop stemmed from routine maintenance at a remote facility replacing aging copper wire with fiber; a newly installed router then failed, grounding thousands of flights. Duffy said the root cause remains unclear and could be a hardware fault, a configuration error or a mistake by contractor L3Harris. According to Duffy, the router sent more than 1,000 connection requests every 4 to 5 seconds to other routers, disrupting radar signals and aircraft communications. He called on Congress to provide additional funding for air-traffic-control modernization.
-
-telegram · zaihuapd · Nov 15, 02:10
-
-**「Background」** A nationwide ground stop is an FAA order that halts departures across the National Airspace System, typically invoked when controllers cannot assure safe separation of traffic. The facility involved in this incident was simultaneously performing routine maintenance to replace legacy copper cabling with fiber as part of ongoing upkeep of air traffic control infrastructure.
-
-**Tags**: `#FAA`, `#network outage`, `#critical infrastructure`, `#router failure`, `#aviation`
+**Tags**: `#FAA`, `#网络故障`, `#路由配置`, `#空管基础设施`, `#系统可靠性`
 
 ---
